@@ -1,0 +1,6 @@
+# macOS
+.DS_Store
+
+# backend
+backend/node_modules
+backend/.env
