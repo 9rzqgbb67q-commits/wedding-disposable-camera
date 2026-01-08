@@ -8,7 +8,7 @@ const video = document.getElementById('video');
 
 const params = new URLSearchParams(window.location.search);
 const token = params.get('token');
-const API_BASE = 'https://intimate-associations-saw-begin.trycloudflare.com';
+const API_BASE = 'https://surprised-tools-bucks-mambo.trycloudflare.com';
 
 if (!token) {
   status.innerText = 'Нет токена';
@@ -34,6 +34,11 @@ async function startCamera() {
     });
   
     video.srcObject = stream;
+    if (currentFacingMode === 'user') {
+        video.style.transform = 'scaleX(-1)';
+      } else {
+        video.style.transform = 'none';
+      }
   
     await new Promise(resolve => {
       video.onloadedmetadata = () => resolve();
@@ -117,8 +122,7 @@ function applyPolaroidEffect(canvas) {
     newCtx.fillStyle = '#f8f8f6';
     newCtx.fillRect(0, 0, newCanvas.width, newCanvas.height);
   
- 
-
+    
 
     // 📸 Фото
     newCtx.drawImage(
@@ -166,6 +170,10 @@ shootBtn.addEventListener('click', async () => {
   
     // 6. делаем снимок
     const ctx = canvas.getContext('2d');
+    if (currentFacingMode === 'user') {
+        ctx.translate(width, 0);
+        ctx.scale(-1, 1);
+      }
     ctx.drawImage(video, 0, 0, width, height);
   
     // 7. применяем эффект

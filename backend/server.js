@@ -11,7 +11,9 @@ app.use(express.json());
 const tokens = {
   "demo123": {
     remaining: 5
-  }
+  },
+  "demo567": { 
+    remaining: 5 }
 };
 
 // 🔹 Проверка сервера
