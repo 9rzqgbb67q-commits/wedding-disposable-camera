@@ -44,18 +44,40 @@ async function loadLimit() {
 }
 
 shootBtn.addEventListener('click', async () => {
-  const res = await fetch('http://localhost:3001/shoot', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ token })
+    // 1. Делаем snapshot
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+  
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    ctx.drawImage(video, 0, 0);
+  
+    // 2. Останавливаем камеру
+    const stream = video.srcObject;
+    stream.getTracks().forEach(track => track.stop());
+  
+    video.style.display = 'none';
+    canvas.style.display = 'block';
+  
+    // 3. Уменьшаем лимит на бэке
+    const res = await fetch('http://localhost:3001/shoot', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token })
+    });
+  
+    const data = await res.json();
+  
+    // 4. Обновляем счётчик
+    status.innerText = `Осталось фото: ${data.remaining}`;
+  
+    // 5. Блокируем кнопку, если плёнка закончилась
+    if (data.remaining <= 0) {
+      shootBtn.disabled = true;
+      shootBtn.innerText = 'Плёнка закончилась';
+    } else {
+      shootBtn.disabled = true; // пока одна фотка = одна попытка
+    }
   });
-
-  const data = await res.json();
-
-  status.innerText = `Осталось фото: ${data.remaining}`;
-
-  if (data.remaining <= 0) {
-    shootBtn.disabled = true;
-    shootBtn.innerText = 'Плёнка закончилась';
-  }
-});
+  
+  

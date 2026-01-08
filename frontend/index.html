@@ -6,22 +6,27 @@
 </head>
 <body>
 
-    <h1>Wedding Camera 🎞</h1>
+  <h1>Wedding Camera 🎞</h1>
 
-    <p id="status">Загрузка...</p>
-  
-    <video
-      id="video"
-      autoplay
-      playsinline
-      style="width: 320px; border-radius: 12px; background: #000;"
-    ></video>
-  
-    <br /><br />
-  
-    <button id="shoot">Сделать фото</button>
-  
-    <script src="app.js"></script>
+  <p id="status">Загрузка...</p>
+
+  <video
+    id="video"
+    autoplay
+    playsinline
+    style="width: 320px; border-radius: 12px; background: #000;"
+  ></video>
+
+  <!-- ВОТ ЭТОГО БЛОКА НЕ ХВАТАЛО -->
+  <canvas
+    id="canvas"
+    style="display:none; margin-top:10px; border-radius:12px;"
+  ></canvas>
+
+  <br /><br />
+
+  <button id="shoot">Сделать фото</button>
+
+  <script src="app.js"></script>
 </body>
 </html>
-
